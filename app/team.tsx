@@ -2,7 +2,16 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import { Link } from 'expo-router';
 
-export default function About() {
+export interface MeetingProps {
+  attendees: string[],
+  length: number,
+}
+
+export default function About(props: MeetingProps) {
+  props = {
+    attendees: ["a", "b", "c"],
+    length: 30
+  }
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -15,13 +24,16 @@ export default function About() {
       <View style={styles.body}>
         <View style={styles.meetingLength}>
           <Text style={styles.bold}>Meeting Length</Text>
-          <Text style={styles.meetingLengthTime}>: 30 minutes</Text>
+          <Text style={styles.meetingLengthTime}>: {props.length} minutes</Text>
         </View>
         <View style={styles.attendees}>
           <Text style={styles.bold}>Attendees:</Text>
           <View style={styles.list}>
-            <Text>{`\u2022 one`}</Text>
-            <Text>{`\u2022 two`}</Text>
+            {props.attendees.map((attendee) => {
+              return(
+                <Text>{`\u2022 ` + attendee}</Text>
+              )
+            })}
           </View>
         </View>
       </View>
